@@ -7,12 +7,6 @@ variable "vpc_id" {
 variable "vpc_region" {
     description = "Region of the target VPC"
 }
-# variable "vpc_private_subnets" {
-#     description = "Comma separated list of private subnet ip address ranges."
-# }
-# variable "vpc_private_subnet_ids" {
-#     description = "Comma separated list of private subnet ids."
-# }
 
 # Server config
 variable "server_name" {
@@ -48,6 +42,11 @@ variable "server_ami" {
     }
 }
 
+# this must be entered in the form 'key=value&key2=value2&...'
+variable "cattle_host_labels" {
+  default = "terraform=true"
+}
+
 variable "server_root_volume_type" {
     default = "gp2"
 }
@@ -63,6 +62,11 @@ variable "agent_version" {
   description = "Version of the rancher agent to use"
 }
 
-variable "rancher_agent_command" {
-  description = "The docker command to register the host with Rancher"
+variable "agent_image" {
+  default = "rancher/agent"
+}
+
+# the rancher host url
+variable "rancher_host_url" {
+  description = "The rancher host url, looks something like https://<api-end-point>/v1/scripts/XX:XX:XX"
 }

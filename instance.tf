@@ -23,12 +23,13 @@ resource "template_file" "user_data" {
     vars {
 
         # VPC config
-        # TODO
         vpc_region = "${var.vpc_region}"
 
         # Server config
-        agent_version            = "${var.agent_version}"
-        rancher_agent_command      = "${var.rancher_agent_command}"
+        agent_version      = "${var.agent_version}"
+        agent_image        = "${var.agent_image}" 
+        rancher_host_url   = "${var.rancher_host_url}"
+        cattle_host_labels = "${var.cattle_host_labels}"
 
     }
 

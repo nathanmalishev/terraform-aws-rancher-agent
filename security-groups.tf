@@ -17,12 +17,25 @@ resource "aws_security_group" "docker_server_sg" {
 }
 
 
-# Outgoing SSH to anywhere
-# Allows configuration of docker host instances via the UI
+# Outgoing & Incomming SSH
 resource "aws_security_group_rule" "ssh_egress" {
 
     security_group_id = "${aws_security_group.docker_server_sg.id}"
     type = "egress"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
+resource "aws_security_group_rule" "ssh_ingress" {
+
+    security_group_id = "${aws_security_group.docker_server_sg.id}"
+    type = "ingress"
     from_port = 22
     to_port = 22
     protocol = "tcp"
