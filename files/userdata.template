@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Install jq/docker
+yum install -y jq docker
+
+# Start docker
+service docker start
+
+# pull required images
+docker ${agent_image}:${agent_version}
+
+# work out IP
+IP=$(curl ipinfo.io/ip)
+
+# Run rancher agent
+sudo docker run -e CATTLE_AGENT_IP="$IP"  -e CATTLE_HOST_LABELS='${cattle_host_labels}'  --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher ${agent_image}:${agent_version} ${rancher_host_url}
