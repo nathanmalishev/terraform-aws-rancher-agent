@@ -10,7 +10,7 @@ service docker start
 docker ${agent_image}:${agent_version}
 
 # work out IP
-IP=$(curl ipinfo.io/ip)
+# IP=$(curl -s http://170.254.169.254/latest/meta-data/local-ipv4)
 
 # Run rancher agent
-sudo docker run -e CATTLE_AGENT_IP="$IP"  -e CATTLE_HOST_LABELS='${cattle_host_labels}'  --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher ${agent_image}:${agent_version} ${rancher_host_url}
+sudo docker run -e CATTLE_HOST_LABELS="${cattle_host_labels}&aws.instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)&aws.availability_zone=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)&ip=$IP"  --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher ${agent_image}:${agent_version} ${rancher_host_url}
