@@ -20,6 +20,7 @@ module "pinger_server" {
   agent_version = "v1.2.2"
   agent_image = "rancher/agent"
   rancher_host_url = "https://<rancher_host_url>/v1/scripts/XX:YY:ZZ"
+  cattle_host_labels = "terraform=true&branch=develop"
 
 }
 

@@ -107,7 +107,7 @@ resource "aws_security_group_rule" "4500_egress" {
 
   }
 
-## some other outbound rules
+## HTTP & HTTPS for healthcheck/schedulars
 resource "aws_security_group_rule" "80_egress" {
 
     security_group_id = "${aws_security_group.docker_server_sg.id}"
@@ -137,7 +137,6 @@ resource "aws_security_group_rule" "443_egress" {
     }
 
 }
-
 
 
 
