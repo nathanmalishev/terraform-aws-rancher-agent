@@ -34,7 +34,7 @@ provider "aws" {
 ```
 resource "aws_route53_record" "server_hostname" {
 
-    zone_id = "Z1H3G5FATXYYOR"
+    zone_id = "<zone_id>"
     name = "<server_hostname>"
     type = "A"
     ttl = "30"
