@@ -107,7 +107,7 @@ resource "aws_security_group_rule" "4500_egress" {
 
   }
 
-## HTTP & HTTPS for healthcheck/schedulars
+## HTTP & HTTPS for general API
 resource "aws_security_group_rule" "80_egress" {
 
     security_group_id = "${aws_security_group.docker_server_sg.id}"
@@ -127,6 +127,35 @@ resource "aws_security_group_rule" "443_egress" {
 
     security_group_id = "${aws_security_group.docker_server_sg.id}"
     type = "egress"
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
+    lifecycle {
+        create_before_destroy = true
+    }
+
+}
+resource "aws_security_group_rule" "80_ingress" {
+
+    security_group_id = "${aws_security_group.docker_server_sg.id}"
+    type = "ingress"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
+    lifecycle {
+        create_before_destroy = true
+    }
+
+}
+
+resource "aws_security_group_rule" "443_ingress" {
+
+    security_group_id = "${aws_security_group.docker_server_sg.id}"
+    type = "ingress"
     from_port = 443
     to_port = 443
     protocol = "tcp"
