@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Install jq/docker
+yum update --security -y
 yum install -y jq docker
 
 # Start docker
@@ -10,8 +11,8 @@ service docker start
 docker ${agent_image}:${agent_version}
 
 # Need region as env
-EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`
-EC2_REGION="`echo \"$EC2_AVAIL_ZONE\" | sed -e 's:\([0-9][0-9]*\)[a-z]*\$:\\1:'`"
+echo "EC2_AVAIL_ZONE=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone`" >> ~/.bash_profile
+echo "EC2_REGION="`echo \"$EC2_AVAIL_ZONE\" | sed -e 's:\([0-9][0-9]*\)[a-z]*\$:\\1:'`""
 
 # Run rancher agent
 sudo docker run -e CATTLE_HOST_LABELS="${cattle_host_labels}&aws.instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)&aws.availability_zone=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)"  --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher ${agent_image}:${agent_version} ${rancher_host_url}
