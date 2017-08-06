@@ -33,10 +33,6 @@ data "template_file" "user_data" {
 
     }
 
-    lifecycle {
-        create_before_destroy = true
-    }
-
 }
 
 # Create instance
