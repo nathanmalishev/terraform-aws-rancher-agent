@@ -16,7 +16,7 @@ resource "aws_key_pair" "keypair" {
 
 
 # User-data template
-resource "template_file" "user_data" {
+data "template_file" "user_data" {
 
     template = "${file("${path.module}/files/userdata.template")}"
 
