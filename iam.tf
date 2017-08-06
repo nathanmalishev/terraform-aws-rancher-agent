@@ -6,9 +6,7 @@
 resource "aws_iam_instance_profile" "docker_server_instance_profile" {
 
     name = "${var.server_name}-instance-profile"
-    roles = [
-        "${aws_iam_role.docker_server_role.name}"
-    ]
+    role = "${aws_iam_role.docker_server_role.name}"
 
     lifecycle {
         create_before_destroy = true
