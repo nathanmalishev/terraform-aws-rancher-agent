@@ -59,7 +59,7 @@ resource "aws_instance" "docker_instance" {
 
     # User-data
     # Installs docker, starts containers and performs initial server setup
-    user_data = "${template_file.user_data.rendered}"
+    user_data = "${data.template_file.user_data.rendered}"
 
     # Instance profile - sets required permissions to access other aws resources
     iam_instance_profile = "${aws_iam_instance_profile.docker_server_instance_profile.id}"
